@@ -1,5 +1,5 @@
 const store = require('./store');
-const getProduct = () => {
+const getOrder =  () => {
   const product = store.find();
   return {
     code: 200,
@@ -8,8 +8,8 @@ const getProduct = () => {
   };
 };
 
-const addProduct = (product) => {
-  const response = store.add(product);
+const addOrder = (order) => {
+  const response = store.add(order);
   return {
     code: 200,
     body: response,
@@ -17,7 +17,7 @@ const addProduct = (product) => {
   };
 };
 
-const removeProduct = (product) => {
+const removeOrder = (product) => {
   const response = store.remove(product);
   return {
     code: 200,
@@ -26,7 +26,7 @@ const removeProduct = (product) => {
   }
 };
 
-const editProduct = (product) => {
+const editOrder = (product) => {
   const response = store.edit(product);
   return {
     code: 200,
@@ -36,8 +36,8 @@ const editProduct = (product) => {
 }
 
 module.exports = {
-  getProduct,
-  addProduct,
-  removeProduct,
-  editProduct
+  getOrder,
+  addOrder,
+  removeOrder,
+  editOrder
 };
