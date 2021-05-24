@@ -24,7 +24,6 @@ const Order = () => {
     return nextStatus;
   }
   const getOrders = async (status) => {
-    console.log(status)
     let filter = ''
     if (status) {
       filter= `?status=${status}`
@@ -33,8 +32,18 @@ const Order = () => {
     const data = await response.json();
     setOrders(data.body);
   }
+  const updateOrderStatus = async (order) => {
+    await fetch('http://localhost:5000/order',{
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(order)
+    });
+    getOrders(order.status);
+  }
   useEffect(() => {
-    getOrders();
+    getOrders('Pendiente');
   }, [])
   return (
     <div>
@@ -49,7 +58,7 @@ const Order = () => {
                   {
                     order.products.map((product) => <Card.Text key={product.sku}>{product.name} - {product.number}</Card.Text>)
                   }
-                <Card.Link href="#">Mover a {nextStatus(order.status)}</Card.Link>
+                <Card.Link onClick={() => {updateOrderStatus({id: order.id, status:nextStatus(order.status)})}}>Mover a {nextStatus(order.status)}</Card.Link>
                 <Card.Link href="#">Cancelar</Card.Link>
               </Card.Body>
             </Card>
