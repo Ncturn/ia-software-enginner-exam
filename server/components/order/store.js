@@ -7,7 +7,7 @@ const orders =
     2,
     3
   ],
-  status: 'Pending'
+  status: 'Pendiente'
 }];
 
 let autoincrement = 1;
