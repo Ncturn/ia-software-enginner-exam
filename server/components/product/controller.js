@@ -8,6 +8,16 @@ const getProduct =  (accountfilter) => {
   };
 };
 
+const addProduct = (product) => {
+  const response = store.add(product);
+  return {
+    code: 200,
+    body: response,
+    error: null,
+  };
+}
+
 module.exports = {
-  getProduct
+  getProduct,
+  addProduct
 };

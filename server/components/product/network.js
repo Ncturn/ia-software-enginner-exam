@@ -11,4 +11,12 @@ router.get('/',  (req, res) => {
   });
 });
 
+router.post('/', (req, res) => {
+  const response = controller.addProduct(req.body);
+  res.status(response.code).send({
+    error: response.error,
+    body: response.body,
+  });
+});
+
 module.exports = router;
