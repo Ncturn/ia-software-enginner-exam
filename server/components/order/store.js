@@ -40,7 +40,7 @@ const updateStock = (product, number) => {
 }
 
 const hasStock = (product, number) => {
-  return (product.stock - number)  > 0;
+  return (product.stock - number)  >= 0;
 }
 
 const find =  (filter) => {

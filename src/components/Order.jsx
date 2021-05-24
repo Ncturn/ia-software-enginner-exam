@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
+  const [filter, setFilter] = useState('Pendiente');
   const nextStatus = (status) => {
     let nextStatus = '';
     switch (status) {
@@ -18,7 +19,7 @@ const Order = () => {
         break;
 
       default:
-        nextStatus = 'Cancelada'
+        nextStatus = 'Pendiente'
         break;
     }
     return nextStatus;
@@ -27,6 +28,7 @@ const Order = () => {
     let filter = ''
     if (status) {
       filter= `?status=${status}`
+      setFilter(status);
     }
     const response = await fetch(`http://localhost:5000/order${filter}`);
     const data = await response.json();
@@ -40,14 +42,14 @@ const Order = () => {
       },
       body: JSON.stringify(order)
     });
-    getOrders(order.status);
+    getOrders(filter);
   }
   useEffect(() => {
     getOrders('Pendiente');
-  }, [])
+  },[])
   return (
     <div>
-      <Navbar getOrders={getOrders}/>
+      <Navbar getOrders={getOrders} filter={filter}/>
       {
         orders.map((order) => {
           return (
@@ -58,8 +60,8 @@ const Order = () => {
                   {
                     order.products.map((product) => <Card.Text key={product.sku}>{product.name} - {product.number}</Card.Text>)
                   }
-                <Card.Link onClick={() => {updateOrderStatus({id: order.id, status:nextStatus(order.status)})}}>Mover a {nextStatus(order.status)}</Card.Link>
-                <Card.Link href="#">Cancelar</Card.Link>
+                <Card.Link href="#" onClick={() => {updateOrderStatus({id: order.id, status:nextStatus(order.status)})}}>Mover a {nextStatus(order.status)}</Card.Link>
+                <Card.Link href="#" onClick={() => {updateOrderStatus({id: order.id, status:'Cancelada'})}}>Cancelar</Card.Link>
               </Card.Body>
             </Card>
           )
