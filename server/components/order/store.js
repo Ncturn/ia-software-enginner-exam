@@ -12,6 +12,10 @@ const orders =
 
 let autoincrement = 1;
 
+const getOrder = (id) => {
+  return orders.find(order => order.id === id);
+};
+
 const getProduct = (sku) => {
   return products.find(product => parseInt(product.sku) === sku);
 };
@@ -59,12 +63,21 @@ const add = (order) => {
   return 'La orden tiene productos sin stock'
 }
 
-const remove = (product) => {
+const remove = (order) => {
   return 'remove'
 }
 
-const edit = (product) => {
-  return 'edit'
+const edit = (order) => {
+  const existingOrder = getOrder(order.id)
+  if (existingOrder) {
+    const index = orders.indexOf(existingOrder);
+    if (index > -1) {
+      orders[index] = order;
+    }
+    return 'Orden Actualizada';
+    
+  }
+  return 'La orden no existe'
 }
 
 module.exports = {

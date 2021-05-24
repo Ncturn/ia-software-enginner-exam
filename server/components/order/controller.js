@@ -17,8 +17,8 @@ const addOrder = (order) => {
   };
 };
 
-const removeOrder = (product) => {
-  const response = store.remove(product);
+const removeOrder = (order) => {
+  const response = store.remove(order);
   return {
     code: 200,
     body: response,
@@ -26,8 +26,8 @@ const removeOrder = (product) => {
   }
 };
 
-const editOrder = (product) => {
-  const response = store.edit(product);
+const editOrder = (order) => {
+  const response = store.edit(order);
   return {
     code: 200,
     body: response,
