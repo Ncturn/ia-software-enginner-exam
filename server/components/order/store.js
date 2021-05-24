@@ -64,7 +64,16 @@ const add = (order) => {
 }
 
 const remove = (order) => {
-  return 'remove'
+  const existingOrder = getOrder(order.id);
+  if (existingOrder) {
+    const index = orders.indexOf(existingOrder);
+    if (index > -1) {
+      orders.splice(index, 1);
+    }
+    return 'Orden eliminada';
+    
+  }
+  return 'La orden no existe no existe'
 }
 
 const edit = (order) => {
