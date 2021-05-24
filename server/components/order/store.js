@@ -3,9 +3,21 @@ const orders =
 [{
   id: '0',
   products: [
-    1,
-    2,
-    3
+    {
+      sku: '1',
+      name: 'Hambuerguesa',
+      number: 2
+    },
+    {
+      sku: '4',
+      name: 'Tacos',
+      number: 3
+    },
+    {
+      sku: '5',
+      name: 'Quesadilla',
+      number: 1
+    },
   ],
   status: 'Pendiente'
 }];
@@ -20,15 +32,15 @@ const getProduct = (sku) => {
   return products.find(product => parseInt(product.sku) === sku);
 };
 
-const updateStock = (product) => {
+const updateStock = (product, number) => {
   const index = products.indexOf(product);
   if (index > -1) {
-    products[index].stock--;
+    products[index].stock = products[index].stock - number;
   }
 }
 
-const hasStock = (product) => {
-  return product.stock > 0;
+const hasStock = (product, number) => {
+  return (product.stock - number)  > 0;
 }
 
 const find =  () => {
@@ -37,10 +49,10 @@ const find =  () => {
 
 const add = (order) => {
   let validOrder = true;
-  order.products.forEach((sku, index) => {
-    const product = getProduct(sku);
+  order.products.forEach((productOrdered) => {
+    const product = getProduct(productOrdered.sku);
     if (product) {
-      if (hasStock(product)) {
+      if (hasStock(product, productOrdered.number)) {
       } else {
         validOrder = false;
       }
@@ -49,15 +61,20 @@ const add = (order) => {
     }
   });
   if (validOrder) {
-    order.products.forEach((sku) => {
-      const product = getProduct(sku);
-      updateStock(product)
+    const newOrder = { products: []};
+    order.products.forEach((productOrdered) => {
+      const product = getProduct(productOrdered.sku);
+      updateStock(product, productOrdered.number)
+      newOrder.products.push({
+        ...productOrdered,
+        name: product.name
+      })
     });
-    order.id = autoincrement;
-    order.status = 'Pending'
+    newOrder.id = autoincrement;
+    newOrder.status = 'Pendiente'
     autoincrement++;
-    orders.push(order);
-    return order;
+    orders.push(newOrder);
+    return newOrder;
   }
 
   return 'La orden tiene productos sin stock'
@@ -81,7 +98,7 @@ const edit = (order) => {
   if (existingOrder) {
     const index = orders.indexOf(existingOrder);
     if (index > -1) {
-      orders[index] = order;
+      orders[index].status = order.status;
     }
     return 'Orden Actualizada';
     
