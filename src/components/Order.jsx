@@ -39,11 +39,9 @@ const Order = () => {
               <Card.Body>
                 <Card.Title>Orden numero {order.id}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">Estado {order.status}</Card.Subtitle>
-                <Card.Text>
                   {
-                    order.products.map((product) => <p>{product.name} - {product.number}</p>)
+                    order.products.map((product) => <Card.Text key={product.sku}>{product.name} - {product.number}</Card.Text>)
                   }
-                </Card.Text>
                 <Card.Link href="#">Mover a {nextStatus(order.status)}</Card.Link>
                 <Card.Link href="#">Cancelar</Card.Link>
               </Card.Body>
