@@ -15,9 +15,19 @@ const addProduct = (product) => {
     body: response,
     error: null,
   };
-}
+};
+
+const removeProduct = (product) => {
+  const response = store.remove(product);
+  return {
+    code: 200,
+    body: response,
+    error: null,
+  }
+};
 
 module.exports = {
   getProduct,
-  addProduct
+  addProduct,
+  removeProduct
 };

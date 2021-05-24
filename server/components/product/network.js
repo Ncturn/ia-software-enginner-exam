@@ -19,4 +19,12 @@ router.post('/', (req, res) => {
   });
 });
 
+router.delete('/', (req, res) => {
+  const response = controller.removeProduct(req.body);
+  res.status(response.code).send({
+    error: response.error,
+    body: response.body,
+  });
+});
+
 module.exports = router;

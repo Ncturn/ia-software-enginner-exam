@@ -17,7 +17,21 @@ const add = (product) => {
   return product;
 }
 
+const remove = (product) => {
+  const existingProduct = validateSku(product);
+  if (existingProduct) {
+    const index = products.indexOf(existingProduct);
+    if (index > -1) {
+      products.splice(index, 1);
+    }
+    return 'Producto eliminado';
+    
+  }
+  return 'El sku ingresado no existe'
+}
+
 module.exports = {
   find,
-  add
+  add,
+  remove
 };
