@@ -27,4 +27,12 @@ router.delete('/', (req, res) => {
   });
 });
 
+router.patch('/', (req, res) => {
+  const response = controller.editProduct(req.body);
+  res.status(response.code).send({
+    error: response.error,
+    body: response.body,
+  });
+});
+
 module.exports = router;

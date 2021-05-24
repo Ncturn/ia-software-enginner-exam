@@ -26,8 +26,18 @@ const removeProduct = (product) => {
   }
 };
 
+const editProduct = (product) => {
+  const response = store.edit(product);
+  return {
+    code: 200,
+    body: response,
+    error: null,
+  }
+}
+
 module.exports = {
   getProduct,
   addProduct,
-  removeProduct
+  removeProduct,
+  editProduct
 };

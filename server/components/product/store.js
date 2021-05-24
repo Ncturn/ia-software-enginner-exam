@@ -30,8 +30,22 @@ const remove = (product) => {
   return 'El sku ingresado no existe'
 }
 
+const edit = (product) => {
+  const existingProduct = validateSku(product);
+  if (existingProduct) {
+    const index = products.indexOf(existingProduct);
+    if (index > -1) {
+      products[index] = product;
+    }
+    return 'Producto editado';
+    
+  }
+  return 'El sku ingresado no existe'
+}
+
 module.exports = {
   find,
   add,
-  remove
+  remove,
+  edit
 };
