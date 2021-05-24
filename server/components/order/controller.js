@@ -1,6 +1,6 @@
 const store = require('./store');
-const getOrder =  () => {
-  const product = store.find();
+const getOrder =  (filter) => {
+  const product = store.find(filter);
   return {
     code: 200,
     body: product,

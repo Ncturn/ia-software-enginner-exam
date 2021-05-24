@@ -43,8 +43,12 @@ const hasStock = (product, number) => {
   return (product.stock - number)  > 0;
 }
 
-const find =  () => {
-  return orders;
+const find =  (filter) => {
+  if (!filter) {
+    return orders;
+  }
+  return orders.filter(order => order.status === filter);
+
 };
 
 const add = (order) => {

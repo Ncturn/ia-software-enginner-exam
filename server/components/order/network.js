@@ -4,7 +4,8 @@ const controller = require('./controller');
 const router = express.Router();
 
 router.get('/',  (req, res) => {
-  const response = controller.getOrder();
+  const filter = req.query.status || null;
+  const response = controller.getOrder(filter);
   res.status(response.code).send({
     error: response.error,
     body: response.body,

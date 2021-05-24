@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
+import Navbar from './Navbar';
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
-  useEffect(() => {
-    const getOrders = async () => {
-      const response = await fetch('http://localhost:5000/order');
-      const data = await response.json();
-      setOrders(data.body);
-    }
-    getOrders();
-  })
   const nextStatus = (status) => {
     let nextStatus = '';
     switch (status) {
@@ -18,10 +11,10 @@ const Order = () => {
         nextStatus =  'En progreso';
         break;
       case 'En progreso':
-        nextStatus =  'Completo';
+        nextStatus =  'Completada';
         break;
-      case 'Completo':
-        nextStatus =  'Entregado';
+      case 'Completada':
+        nextStatus =  'Entregada';
         break;
 
       default:
@@ -30,8 +23,22 @@ const Order = () => {
     }
     return nextStatus;
   }
+  const getOrders = async (status) => {
+    console.log(status)
+    let filter = ''
+    if (status) {
+      filter= `?status=${status}`
+    }
+    const response = await fetch(`http://localhost:5000/order${filter}`);
+    const data = await response.json();
+    setOrders(data.body);
+  }
+  useEffect(() => {
+    getOrders();
+  }, [])
   return (
     <div>
+      <Navbar getOrders={getOrders}/>
       {
         orders.map((order) => {
           return (
